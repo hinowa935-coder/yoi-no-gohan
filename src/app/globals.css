@@ -2,6 +2,10 @@
 
 :root {
   color-scheme: dark;
+  --font-body-ja: "Hiragino Sans", "Yu Gothic", "YuGothic",
+    "Noto Sans JP", "Meiryo", system-ui, sans-serif;
+  --font-display-ja: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN",
+    "Hiragino Mincho Pro", "Noto Serif JP", serif;
 }
 
 * {
@@ -12,10 +16,40 @@ body {
   margin: 0;
   min-height: 100vh;
   background: #07101f;
+  font-family: var(--font-body-ja);
+  font-feature-settings: "palt";
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
 }
 
 button,
 input,
 select {
   font: inherit;
+}
+
+.font-display-ja {
+  font-family: var(--font-display-ja);
+  font-feature-settings: "palt";
+  letter-spacing: 0.04em;
+}
+
+.font-body-ja {
+  font-family: var(--font-body-ja);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display-ja);
+  font-feature-settings: "palt";
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+article > p,
+header p:last-child {
+  font-family: var(--font-display-ja);
+  font-feature-settings: "palt";
+  letter-spacing: 0.04em;
 }
