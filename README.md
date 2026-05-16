@@ -2,7 +2,7 @@
 
 日本酒と家庭料理のペアリングを、料理・気分・産地・味わい・夜の言葉から探せるNext.jsアプリです。
 
-公開URL: https://yoi-no-ikkon-yata-s-projects.vercel.app/
+公開URL: https://yoi-no-ikkon.vercel.app/
 
 ## ローカルで確認
 
