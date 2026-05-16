@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { sakePairings } from "../data/sakePairings";
 
 const ALL = "すべて";
+const FAVORITES_KEY = "yoi-no-ikkon-favorites";
 
 const dishOptions = [
   "焼き魚",
@@ -181,63 +182,108 @@ function dailyPick(list, count) {
   });
 }
 
-function SakeCard({ item }) {
+function SakeCard({
+  item,
+  isFavorite,
+  onToggleFavorite,
+  initialExpanded = false,
+  featured = false,
+}) {
+  const [isExpanded, setIsExpanded] = useState(initialExpanded);
+  const productHref = item.productUrl || item.officialUrl || item.webSearchUrl;
+
   return (
-    <article className="rounded-lg border border-[#f8f0df]/12 bg-[#0b1729]/86 p-5 shadow-2xl shadow-black/20">
+    <article
+      className={`rounded-lg border bg-[#0b1729]/86 p-4 shadow-2xl shadow-black/20 sm:p-5 ${
+        featured
+          ? "border-[#d8bd7a]/45"
+          : "border-[#f8f0df]/12"
+      }`}
+    >
       <div>
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-          <p className="text-sm text-[#d8bd7a]">
-            {item.prefecture} / {item.region}
-          </p>
-          <span className="w-fit shrink-0 rounded-full border border-[#d8bd7a]/35 px-3 py-1 text-xs leading-none text-[#f2dfad] sm:text-sm">
-            {item.nightType}
-          </span>
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-xs leading-5 text-[#d8bd7a] sm:text-sm">
+              {item.prefecture} / {item.region}
+            </p>
+            <h3 className="mt-1 text-xl font-medium leading-snug text-[#fff8e9] sm:text-2xl">
+              {item.productName || item.sake}
+            </h3>
+            <p className="mt-1 text-sm leading-6 text-[#bdb5a5]">
+              {item.brewery}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => onToggleFavorite(item.id)}
+            aria-pressed={isFavorite}
+            className={`shrink-0 rounded-full border px-3 py-1.5 text-xs transition ${
+              isFavorite
+                ? "border-[#d8bd7a]/70 bg-[#d8bd7a]/18 text-[#fff4d8]"
+                : "border-[#f8f0df]/16 text-[#d8d0bf] hover:border-[#d8bd7a]/60 hover:text-[#fff4d8]"
+            }`}
+          >
+            {isFavorite ? "お気に入り済み" : "お気に入り"}
+          </button>
         </div>
 
-        <h3 className="mt-2 text-2xl font-medium leading-snug text-[#fff8e9]">
-          {item.productName || item.sake}
-        </h3>
-        <p className="mt-1 text-sm leading-6 text-[#bdb5a5]">
-          {item.brewery}
-        </p>
-        <a
-          href={item.productUrl || item.officialUrl || item.webSearchUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-3 inline-flex w-fit rounded-full border border-[#d8bd7a]/30 px-3 py-1 text-xs text-[#f2dfad] transition hover:border-[#d8bd7a]/70 hover:bg-[#d8bd7a]/10 hover:text-[#fff8e9]"
-        >
-          {item.productUrl
-            ? "商品を見る"
-            : item.officialUrl
-              ? "公式を見る"
-              : "Webで探す"}
-        </a>
+        <span className="mt-3 inline-flex w-fit rounded-full border border-[#d8bd7a]/35 px-3 py-1 text-xs leading-none text-[#f2dfad]">
+          {item.nightType}
+        </span>
       </div>
 
-      <p className="mt-5 border-l border-[#d8bd7a]/50 pl-4 text-base leading-8 text-[#fff4d8]">
+      <p className="mt-4 border-l border-[#d8bd7a]/50 pl-4 text-sm leading-7 text-[#fff4d8] sm:text-base sm:leading-8">
         {item.essay}
       </p>
 
-      <div className="mt-5 space-y-4 text-sm text-[#d8d0bf]">
-        <div>
-          <p className="text-[#d8bd7a]">合う料理</p>
-          <p className="mt-2 leading-7">{item.dishes.join("、")}</p>
-        </div>
-        <div>
-          <p className="text-[#d8bd7a]">気分</p>
-          <p className="mt-2 leading-7">{item.moods.join("、")}</p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <p className="text-[#d8bd7a]">おすすめ温度</p>
-            <p className="mt-2 leading-7">{item.temperature.join("、")}</p>
-          </div>
-          <div>
-            <p className="text-[#d8bd7a]">味わい</p>
-            <p className="mt-2 leading-7">{item.taste.slice(0, 4).join("、")}</p>
-          </div>
-        </div>
+      <div className="mt-4 text-sm text-[#d8d0bf]">
+        <p className="text-[#d8bd7a]">合う料理</p>
+        <p className="mt-2 leading-7">{item.dishes.slice(0, 3).join("、")}</p>
       </div>
+
+      <button
+        type="button"
+        onClick={() => setIsExpanded((current) => !current)}
+        aria-expanded={isExpanded}
+        className="mt-4 w-full rounded-lg border border-[#f8f0df]/12 px-4 py-2.5 text-sm text-[#f2dfad] transition hover:border-[#d8bd7a]/60 hover:bg-[#d8bd7a]/10"
+      >
+        {isExpanded ? "詳細を閉じる" : "詳細を見る"}
+      </button>
+
+      {isExpanded ? (
+        <div className="mt-4 space-y-4 border-t border-[#f8f0df]/10 pt-4 text-sm text-[#d8d0bf]">
+          <div>
+            <p className="text-[#d8bd7a]">気分</p>
+            <p className="mt-2 leading-7">{item.moods.join("、")}</p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="text-[#d8bd7a]">おすすめ温度</p>
+              <p className="mt-2 leading-7">{item.temperature.join("、")}</p>
+            </div>
+            <div>
+              <p className="text-[#d8bd7a]">味わい</p>
+              <p className="mt-2 leading-7">{item.taste.slice(0, 4).join("、")}</p>
+            </div>
+          </div>
+          <div>
+            <p className="text-[#d8bd7a]">全料理</p>
+            <p className="mt-2 leading-7">{item.dishes.join("、")}</p>
+          </div>
+          <a
+            href={productHref}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex w-fit rounded-full border border-[#d8bd7a]/30 px-3 py-1.5 text-xs text-[#f2dfad] transition hover:border-[#d8bd7a]/70 hover:bg-[#d8bd7a]/10 hover:text-[#fff8e9]"
+          >
+            {item.productUrl
+              ? "商品を見る"
+              : item.officialUrl
+                ? "公式を見る"
+                : "Webで探す"}
+          </a>
+        </div>
+      ) : null}
     </article>
   );
 }
@@ -251,6 +297,21 @@ export default function Page() {
     night: ALL,
   });
   const [freeKeyword, setFreeKeyword] = useState("");
+  const [favoriteIds, setFavoriteIds] = useState([]);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [randomPickItem, setRandomPickItem] = useState(null);
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(FAVORITES_KEY);
+      if (saved) {
+        setFavoriteIds(JSON.parse(saved));
+      }
+    } catch {
+      setFavoriteIds([]);
+    }
+  }, []);
 
   const nightOptions = useMemo(() => {
     const existing = unique(sakePairings.map((item) => item.nightType));
@@ -263,6 +324,10 @@ export default function Page() {
     const keyword = freeKeyword.trim();
 
     return sakePairings.filter((item) => {
+      if (showFavoritesOnly && !favoriteIds.includes(item.id)) {
+        return false;
+      }
+
       const structuredMatch = Object.entries(filters).every(([key, value]) =>
         includesKeyword(searchValues(item, key), value),
       );
@@ -288,10 +353,35 @@ export default function Page() {
 
       return freeValues.some((value) => String(value).includes(keyword));
     });
-  }, [filters, freeKeyword]);
+  }, [favoriteIds, filters, freeKeyword, showFavoritesOnly]);
 
   const updateFilter = (key, value) => {
     setFilters((current) => ({ ...current, [key]: value }));
+    setRandomPickItem(null);
+  };
+
+  const toggleFavorite = (id) => {
+    setFavoriteIds((current) => {
+      const next = current.includes(id)
+        ? current.filter((favoriteId) => favoriteId !== id)
+        : [...current, id];
+
+      window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const chooseRandomPick = () => {
+    if (filteredItems.length === 0) {
+      setRandomPickItem(null);
+      return;
+    }
+
+    const index = Math.floor(Math.random() * filteredItems.length);
+    setRandomPickItem(filteredItems[index]);
+    document
+      .getElementById("tonight-pick")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -390,9 +480,50 @@ export default function Page() {
           id="search"
           className="grid gap-8 py-6 lg:grid-cols-[380px_1fr] lg:py-8"
         >
-          <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
-            <div className="rounded-lg border border-[#f8f0df]/12 bg-[#0b1729]/82 p-4 sm:p-5">
-              <p className="text-sm text-[#d8bd7a]">今夜の一本を探す</p>
+          <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((current) => !current)}
+              className="flex w-full items-center justify-between rounded-lg border border-[#f8f0df]/12 bg-[#0b1729]/82 px-4 py-3 text-left text-sm text-[#f2dfad] lg:hidden"
+            >
+              <span>検索条件</span>
+              <span>{filtersOpen ? "閉じる" : "開く"}</span>
+            </button>
+
+            <div
+              className={`rounded-lg border border-[#f8f0df]/12 bg-[#0b1729]/82 p-4 sm:p-5 ${
+                filtersOpen ? "block" : "hidden"
+              } lg:block`}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-sm text-[#d8bd7a]">今夜の一本を探す</p>
+                <span className="text-xs text-[#bdb5a5]">
+                  {filteredItems.length}本
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={chooseRandomPick}
+                className="mt-4 w-full rounded-lg border border-[#d8bd7a]/35 bg-[#d8bd7a]/10 px-4 py-3 text-sm text-[#fff4d8] transition hover:border-[#d8bd7a]/70 hover:bg-[#d8bd7a]/18"
+              >
+                今夜の一本
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setShowFavoritesOnly((current) => !current);
+                  setRandomPickItem(null);
+                }}
+                className={`mt-3 w-full rounded-lg border px-4 py-3 text-sm transition ${
+                  showFavoritesOnly
+                    ? "border-[#d8bd7a]/70 bg-[#d8bd7a]/18 text-[#fff4d8]"
+                    : "border-[#f8f0df]/12 text-[#f2dfad] hover:border-[#d8bd7a]/60 hover:bg-[#d8bd7a]/10"
+                }`}
+              >
+                お気に入りだけ表示
+              </button>
 
               <div className="mt-4 rounded-lg border border-[#f8f0df]/10 bg-[#020814]/45 p-3">
                 <p className="text-sm text-[#d8bd7a]">組み合わせ条件</p>
@@ -461,6 +592,8 @@ export default function Page() {
                     night: ALL,
                   });
                   setFreeKeyword("");
+                  setShowFavoritesOnly(false);
+                  setRandomPickItem(null);
                 }}
                 className="mt-4 w-full rounded-lg border border-[#f8f0df]/12 px-4 py-3 text-sm text-[#f2dfad] transition hover:border-[#d8bd7a]/60 hover:bg-[#d8bd7a]/10"
               >
@@ -482,15 +615,59 @@ export default function Page() {
               </p>
             </div>
 
+            <div className="mb-5 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
+              <button
+                type="button"
+                onClick={chooseRandomPick}
+                className="rounded-lg border border-[#d8bd7a]/35 bg-[#d8bd7a]/10 px-4 py-3 text-sm text-[#fff4d8] transition hover:border-[#d8bd7a]/70 hover:bg-[#d8bd7a]/18"
+              >
+                今夜の一本を選ぶ
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowFavoritesOnly((current) => !current);
+                  setRandomPickItem(null);
+                }}
+                className={`rounded-lg border px-4 py-3 text-sm transition ${
+                  showFavoritesOnly
+                    ? "border-[#d8bd7a]/70 bg-[#d8bd7a]/18 text-[#fff4d8]"
+                    : "border-[#f8f0df]/12 text-[#f2dfad] hover:border-[#d8bd7a]/60 hover:bg-[#d8bd7a]/10"
+                }`}
+              >
+                お気に入りのみ
+              </button>
+            </div>
+
+            {randomPickItem ? (
+              <div id="tonight-pick" className="mb-6">
+                <p className="mb-3 text-sm text-[#d8bd7a]">今夜の一本</p>
+                <SakeCard
+                  item={randomPickItem}
+                  isFavorite={favoriteIds.includes(randomPickItem.id)}
+                  onToggleFavorite={toggleFavorite}
+                  initialExpanded
+                  featured
+                />
+              </div>
+            ) : null}
+
             {filteredItems.length > 0 ? (
               <div className="grid gap-4 xl:grid-cols-2">
                 {filteredItems.map((item) => (
-                  <SakeCard key={item.id} item={item} />
+                  <SakeCard
+                    key={item.id}
+                    item={item}
+                    isFavorite={favoriteIds.includes(item.id)}
+                    onToggleFavorite={toggleFavorite}
+                  />
                 ))}
               </div>
             ) : (
               <div className="rounded-lg border border-[#f8f0df]/12 bg-[#0b1729]/82 p-6 text-[#d8d0bf]">
-                条件を少しゆるめると、今夜に似合う一本が見つかります。
+                {showFavoritesOnly
+                  ? "お気に入りに入れた一本が、ここに並びます。"
+                  : "条件を少しゆるめると、今夜に似合う一本が見つかります。"}
               </div>
             )}
           </section>
