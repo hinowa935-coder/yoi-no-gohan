@@ -1,0 +1,218 @@
+const officialLineupOverrides = {
+  "tenbu-junmai-daiginjo": {
+    productName: "天賦 純米吟醸",
+    officialUrl: "https://www.nishi-shuzo.co.jp/tenbu/products/",
+    productUrl: "https://www.nishi-shuzo.co.jp/tenbu/products/",
+  },
+  "tenbu-omachi-shiboritate": {
+    productName: "天賦 純米大吟醸",
+    officialUrl: "https://www.nishi-shuzo.co.jp/tenbu/products/",
+    productUrl: "https://www.nishi-shuzo.co.jp/tenbu/products/",
+  },
+  "niwa-no-uguisu-junmai-ginjo-1": {
+    productName: "庭のうぐいす 特別純米",
+    officialUrl: "https://niwanouguisu.com/products/",
+    productUrl: "https://niwanouguisu.com/products/",
+  },
+  "niwa-no-uguisu-usunigori": {
+    productName: "庭のうぐいす 純米吟醸",
+    officialUrl: "https://niwanouguisu.com/products/",
+    productUrl: "https://niwanouguisu.com/products/",
+  },
+  "mutsu-hassen-red-label-2": {
+    sake: "陸奥八仙",
+    productName: "陸奥八仙 赤ラベル 特別純米（火入）",
+    officialUrl: "https://mutsu8000.com/products/",
+    productUrl: "https://mutsu8000.com/products/",
+  },
+  "atago-no-matsu-i3yhce-4": {
+    sake: "愛宕の松",
+    productName: "あたごのまつ 特別純米",
+    officialUrl: "https://niizawa-brewery.co.jp/item/",
+    productUrl: "https://niizawa-brewery.co.jp/item/",
+  },
+  "kawatsuru-uc9ijh-2": {
+    sake: "川鶴",
+    productName: "川鶴 純米酒",
+    officialUrl: "https://kawatsuru.com/product/",
+    productUrl: "https://kawatsuru.com/product/",
+  },
+  "tanaka-rokugo-junmai-3": {
+    sake: "田中六五",
+    productName: "田中六五 純米酒",
+    officialUrl: "https://shiraito.com/",
+    productUrl: "https://shiraito.com/",
+  },
+  "tanaka-rokugo-6513-sparkling": {
+    productName: "田中六五 純米酒",
+    officialUrl: "https://shiraito.com/",
+    productUrl: "https://shiraito.com/",
+  },
+  "wakanami-junmai-2": {
+    sake: "若波",
+    productName: "若波 純米吟醸",
+    officialUrl: "https://www.wakanami.jp/",
+    productUrl: "https://www.wakanami.jp/",
+  },
+  "wakanami-junmai-ginjo-jugemu": {
+    productName: "若波 純米吟醸",
+    officialUrl: "https://www.wakanami.jp/",
+    productUrl: "https://www.wakanami.jp/",
+  },
+  "satsumaji-vb3g28id2": {
+    sake: "薩州正宗",
+    productName: "薩州正宗 純米吟醸",
+    officialUrl: "https://www.hamadasyuzou.co.jp/kinzan/",
+    productUrl: "https://www.hamadasyuzou.co.jp/kinzan/",
+  },
+  "satsuma-jigenryu-vb3g28id2-4": {
+    sake: "薩州正宗",
+    productName: "薩州正宗 純米吟醸酒",
+    officialUrl: "https://www.hamadasyuzou.co.jp/kinzan/products/sasshu_masamune_ginjyo.html",
+    productUrl: "https://www.hamadasyuzou.co.jp/kinzan/products/sasshu_masamune_ginjyo.html",
+  },
+  "koeigiku-snow-crescent": {
+    productName: "光栄菊",
+    officialUrl: "https://www.instagram.com/koueigiku/",
+    productUrl: "https://www.instagram.com/koueigiku/",
+  },
+  "koeigiku-gekkou": {
+    productName: "光栄菊 月光",
+    officialUrl: "https://www.instagram.com/koueigiku/",
+    productUrl: "https://www.instagram.com/koueigiku/",
+  },
+  "hiroki-tokubetsu-junmai-1": {
+    productName: "飛露喜 純米大吟醸",
+    productUrl: "",
+  },
+  "juyondai-honmaru-1": {
+    productName: "十四代 純米大吟醸 龍の落とし子",
+    productUrl: "",
+  },
+  "jikon-modern-premium-4": {
+    productName: "而今 特別純米",
+    productUrl: "",
+  },
+  "sentoku-i3yidq": {
+    productName: "千徳 純米酒",
+    productUrl: "",
+  },
+  "hanakagura-i3yidq": {
+    productName: "千徳 吟醸酒 はなかぐら",
+    productUrl: "",
+  },
+  "sentoku-i3yidq-1": {
+    productName: "大吟醸 千徳",
+    productUrl: "",
+  },
+  "hanakagura-i3yidq-5": {
+    productName: "千徳 吟醸酒 はなかぐら",
+    productUrl: "",
+  },
+};
+
+const seasonalProductTerms = [
+  "限定",
+  "季節",
+  "生酒",
+  "生原酒",
+  "搾立",
+  "搾り",
+  "しぼり",
+  "ひやおろし",
+  "新酒",
+  "うすにごり",
+  "おりがらみ",
+  "直汲",
+  "荒走",
+  "初仕込み",
+  "壱番しぼり酒",
+  "もとしぼり",
+  "限定",
+  "新酒・",
+];
+
+const removableProductPhrases = [
+  "無濾過生原酒",
+  "無ろ過生原酒",
+  "無濾過生酒原酒",
+  "無濾過生酒",
+  "生原酒",
+  "生酒",
+  "搾立生酒",
+  "しぼりたて",
+  "ひやおろし",
+  "うすにごり",
+  "おりがらみ",
+  "直汲み",
+  "直汲",
+  "荒走り",
+  "中取り",
+  "別誂",
+  "初仕込み",
+  "壱番しぼり酒",
+  "もとしぼり",
+  "限定",
+  "新酒・",
+];
+
+function safeHost(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+function isInstagramUrl(url) {
+  return Boolean(url && url.includes("instagram.com"));
+}
+
+function sameOfficialSite(productUrl, officialUrl) {
+  const productHost = safeHost(productUrl);
+  const officialHost = safeHost(officialUrl);
+  return Boolean(productHost && officialHost && productHost === officialHost);
+}
+
+function hasSeasonalProductTerm(productName = "") {
+  return seasonalProductTerms.some((term) => productName.includes(term));
+}
+
+function cleanedProductName(productName, fallback) {
+  if (!productName) return fallback;
+
+  const cleaned = removableProductPhrases
+    .reduce((name, phrase) => name.replaceAll(phrase, ""), productName)
+    .replace(/\s{2,}/g, " ")
+    .replace(/[・／/、-]\s*$/g, "")
+    .trim();
+
+  return cleaned || fallback;
+}
+
+export function reviewPairingProduct(item) {
+  const override = officialLineupOverrides[item.id] || {};
+  const next = { ...item, ...override };
+
+  const productUrl = next.productUrl || "";
+  const officialUrl = next.officialUrl || "";
+
+  if (!override.productName && hasSeasonalProductTerm(next.productName)) {
+    next.productName = cleanedProductName(next.productName, next.sake);
+  }
+
+  if (
+    productUrl &&
+    officialUrl &&
+    !isInstagramUrl(productUrl) &&
+    !sameOfficialSite(productUrl, officialUrl)
+  ) {
+    next.productUrl = officialUrl;
+  }
+
+  if (!officialUrl && productUrl && !override.productUrl) {
+    next.productUrl = "";
+  }
+
+  return next;
+}
