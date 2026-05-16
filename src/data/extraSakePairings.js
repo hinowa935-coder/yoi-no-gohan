@@ -1,0 +1,31 @@
+export const extraSakePairings = [
+  {
+    id: "senkin-kabutoumushi",
+    sake: "仙禽",
+    brewery: "せんきん",
+    prefecture: "栃木県",
+    region: "さくら市",
+    areaGroup: "関東甲信越",
+    style: ["季節酒", "無濾過生原酒", "モダン", "冷酒向き"],
+    taste: ["爽やか", "酸味", "軽快", "みずみずしい"],
+    temperature: ["冷酒"],
+    moods: ["暑い夜", "軽く飲みたい", "気分を変えたい", "友人と飲む"],
+    dishes: [
+      "冷しゃぶサラダ",
+      "鶏むね肉の梅しそ和え",
+      "トマトと大葉の冷奴",
+      "白身魚の南蛮漬け",
+      "きゅうりの浅漬け",
+    ],
+    dishCategories: ["豚肉料理", "鶏料理", "豆腐料理", "魚料理"],
+    color: "月白",
+    nightType: "宵涼みの一杯",
+    essay: "澄んだ酸が軽やかにほどけ、宵涼みに涼しい余韻を残す。",
+    officialUrl: "https://www.senkin.co.jp/",
+    instagramUrl: "https://www.instagram.com/senkinofficial/",
+    productName: "仙禽 かぶとむし",
+    productUrl: "https://www.sakenomy.jp/sake/TST0000046983/",
+    webSearchUrl:
+      "https://www.google.com/search?q=%E4%BB%99%E7%A6%BD%20%E3%81%8B%E3%81%B6%E3%81%A8%E3%82%80%E3%81%97%20%E3%81%9B%E3%82%93%E3%81%8D%E3%82%93%20%E6%97%A5%E6%9C%AC%E9%85%92",
+  },
+];
