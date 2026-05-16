@@ -1,4 +1,15 @@
 const officialLineupOverrides = {
+  "miinokotobuki-junmai-ginjo": {
+    productName: "三井の寿 純米吟醸 +14 大辛口",
+    officialUrl: "https://miinokotobuki.com/",
+    productUrl: "https://miinokotobuki.com/",
+  },
+  "miinokotobuki-junmai-ginjo-4": {
+    sake: "三井の寿",
+    productName: "三井の寿 純米吟醸 +14 大辛口",
+    officialUrl: "https://miinokotobuki.com/",
+    productUrl: "https://miinokotobuki.com/",
+  },
   "tenbu-junmai-daiginjo": {
     productName: "天賦 純米吟醸",
     officialUrl: "https://www.nishi-shuzo.co.jp/tenbu/products/",
@@ -109,6 +120,65 @@ const officialLineupOverrides = {
     productName: "千徳 吟醸酒 はなかぐら",
     productUrl: "",
   },
+  "kagura-fjg-4": {
+    sake: "神蔵",
+    productName: "神蔵 純米大吟醸",
+    officialUrl: "https://matsuishuzo.com/",
+    productUrl: "https://matsuishuzo.com/",
+  },
+  "wakabotan-hlzg7a-4": {
+    sake: "和香牡丹",
+    productName: "和香牡丹 純米吟醸",
+    officialUrl: "https://www.sanwa-shurui.co.jp/brand/27.html",
+    productUrl: "https://www.sanwa-shurui.co.jp/brand/27.html",
+  },
+  "shinkame-hdomtl-3": {
+    sake: "神亀",
+    productName: "神亀 純米酒",
+    officialUrl: "https://shinkame.co.jp/",
+    productUrl: "https://shinkame.co.jp/",
+  },
+  "shichihonyari-lvvrsw-2": {
+    sake: "七本鎗",
+    productName: "七本鎗 純米 玉栄",
+    officialUrl: "https://www.7yari.co.jp/product/",
+    productUrl: "https://www.7yari.co.jp/product/",
+  },
+  "fukuda-tividq-4": {
+    sake: "福田",
+    productName: "福田 純米吟醸 山田錦",
+    officialUrl: "https://www.fukuda-shuzo.com/",
+    productUrl: "https://www.fukuda-shuzo.com/",
+  },
+  "zarusou-hourai-nz2hmwijh-2": {
+    sake: "残草蓬莱",
+    productName: "残草蓬莱 純米吟醸 Queeen",
+    officialUrl: "https://oyatakashi-shuzo.com/product/152/",
+    productUrl: "https://oyatakashi-shuzo.com/product/152/",
+  },
+  "mizubasho-p7oucs-4": {
+    sake: "水芭蕉",
+    productName: "水芭蕉 純米吟醸",
+    officialUrl: "https://nagai-sake.co.jp/item_category/mizubasho/",
+    productUrl: "https://nagai-sake.co.jp/item_category/mizubasho/",
+  },
+  "ippongi-o0ffit-4": {
+    sake: "一本義",
+    productName: "一本義 純米酒",
+    officialUrl: "https://www.ippongi.co.jp/",
+    productUrl: "https://www.ippongi.co.jp/",
+  },
+  "hyakushun-ia8tng-4": {
+    sake: "百春",
+    productName: "百春 純米吟醸",
+    officialUrl: "https://www.kuramoto-kosaka.com/products/",
+    productUrl: "https://www.kuramoto-kosaka.com/products/",
+  },
+  "harushika-chokarakuchi-junmai": {
+    productName: "春鹿 純米超辛口",
+    officialUrl: "https://www.harushika.com/",
+    productUrl: "https://www.harushika.com/",
+  },
 };
 
 const seasonalProductTerms = [
@@ -130,6 +200,11 @@ const seasonalProductTerms = [
   "もとしぼり",
   "限定",
   "新酒・",
+  "活性",
+  "スパークリング",
+  "薄にごり",
+  "夏酒",
+  "冬のにごり酒",
 ];
 
 const removableProductPhrases = [
@@ -154,6 +229,11 @@ const removableProductPhrases = [
   "もとしぼり",
   "限定",
   "新酒・",
+  "活性",
+  "スパークリング",
+  "薄にごり",
+  "夏酒",
+  "冬のにごり酒",
 ];
 
 function safeHost(url) {
